@@ -5,10 +5,8 @@ import sys
 import csv
 import kagglehub
 
-# Download latest version
+# Download latest version of dic
 path = kagglehub.dataset_download("kartmaan/dictionnaire-francais")
-
-#print("Path to dataset files:", path)
 
 
 def cleanUp(expression):
@@ -26,21 +24,15 @@ def cleanUp(expression):
 
 
 def listAnagrams(expression, dictionary):
- #   exp = cleanUp(expression)
- #   print(exp)
     for word in dictionary:
- #       print(word)
         if isAnagram(expression, word):
-            print("%s est un anagramme de %s" % (word, expression))
+            print("%s: anagram of %s" % (word, expression))
             
 def isAnagram(strA, strB):
     cleanA = cleanUp(strA.strip())
     cleanB = cleanUp(strB.strip())
     a = cleanA.upper()
     b = cleanB.upper()
-
-#    print("%s: %s" % ('a', a))
-#    print("%s: %s" % ('b', b))
     
     if len(a) != len(b):
         return False
@@ -49,7 +41,6 @@ def isAnagram(strA, strB):
         return True
         
     c = a[0]
-#    print("%s: %s" % ('c', c))
         
     if c in b: 
         aSplit = a.split(c, 1)
@@ -58,18 +49,11 @@ def isAnagram(strA, strB):
 
 
 # main
-path2 = r"C:\Users\alegr\Documents\data\archive\dico.csv"
-
-with open(path2, mode='r', encoding="utf-8") as infile:
+with open(path, mode='r', encoding="utf-8") as infile:
     reader = csv.reader(infile)
     with open('outputdic.csv', mode='w', encoding="utf-8") as outfile:
         writer = csv.writer(outfile)
-#        for rows in reader:
-#            mydict = {cleanUp(rows[0]):cleanUp(rows[1])}
         pubDict = {rows[0] for rows in reader}
-
-#testDictionary = {'albert', 'etienne', 'einstein', 'klein', 'claudine', 'legrand', 'antoine'}
-#testWord = 'antoine'
 
 inputs = sys.argv[1:] 
 
@@ -87,13 +71,3 @@ elif len(inputs) == 2:
                     if isAnagram(targetExp, word1+word2):
                         print("%s %s : %s" % (word1, word2, inputExp))
             
-    
-    
-    
-        
-    
-    
-            
-        
-        
-
